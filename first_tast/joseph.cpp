@@ -51,15 +51,25 @@ void display(joseph &head)
 	}
 	cout<<'\n';
 }
-//假设循环数是4
+//pretenu circle 4
+// strat from s=8
 void linger(joseph &head)
 {
-	int total,count,mod;
+	int total,count,mod,s;
 	joseph *p;
 	p=&head;
 	count=0;
 	total=20;
 	mod=4;
+	s = 8;
+	s = s%total;
+	while(s>1)
+	{
+		p=p->next;
+		s--;
+	}
+
+
 	
 	while(total>1)
 	{
@@ -71,6 +81,7 @@ void linger(joseph &head)
 			{
 				p->flag=1;
 				total--;
+				cout<<p->data<<" ";
 			}
 		}
 		p=p->next;
@@ -79,7 +90,7 @@ void linger(joseph &head)
 	{
 		p=p->next;
 	}
-		cout<<"survive: "<<p->data<<"\n";
+		cout<<"\nsurvive: "<<p->data<<"\n";
 
 
 }
