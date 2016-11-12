@@ -29,7 +29,7 @@ void InitQueue_L(LinkQueue &Q)
 {
 	Q.front=Q.rear=new QNode;
 	Q.front->next=NULL;
-	Q.front->flag=9999;
+	Q.front->flag=0;
 	Q.front->data=0;
 	Q.rear->next=Q.front;
 
@@ -73,7 +73,6 @@ void GetHead_Sq_L(LinkQueue &Q,ElemType &e)
 	if(Q.front->next==NULL) ERROR("Queue Empty");
 	e=Q.front->data;
 	Q.front=Q.front->next;
-	cout<<"flag:------"<<Q.front->flag<<endl;
 }
 void EnQueue_L(LinkQueue &Q,ElemType e,int i)
 {
@@ -84,7 +83,6 @@ void EnQueue_L(LinkQueue &Q,ElemType e,int i)
 	p->next=NULL;
 	Q.rear->next=p;
 	Q.rear=p;
-	cout<<endl<<"e: "<<e<<endl;
 }
 void DeQueue_L(LinkQueue &Q,ElemType &e)
 {
@@ -102,10 +100,7 @@ void DeQueue_L(LinkQueue &Q,ElemType &e)
 void update_Queue(LinkQueue &Q,ElemType e)
 {
 	Q.rear=Q.rear->next;
-	Q.rear->data=e;
-
-//	cout<<endl<<"flag: "<<Q.front->data<<endl;
-	
+	Q.rear->data=e;	
 }
 void print(LinkQueue &Q)
 {
@@ -118,12 +113,13 @@ void print(LinkQueue &Q)
 		cout<<"flag: "<<p->flag<<" data: "<<p->data<<endl;
 		p=p->next;
 	}
+	cout<<endl;
 }
 int main()
 {
 	LinkQueue Q;
-	int e,p;
-	int i,t,temp;
+	int e;
+	int i,temp;
 	InitQueue_L(Q);
 	for(i=0;i<k-2;i++)
 	{
@@ -131,32 +127,16 @@ int main()
 		cout<<endl<<i;
 	}
 	EnQueue_L(Q,1,k-2);
-	
-//	update_Queue(Q,1);
-
 	Q.rear->next=Q.front;
 	GetHead_Sq_L(Q,e);
 	update_Queue(Q,1);
-	cout<<endl<<"start"<<endl;
-	print(Q);
-	cout<<endl<<"stop--"<<endl;
-
-
-	cout<<"ppppppp"<<endl;
-	cout<<Q.front->flag<<endl;
-	cout<<Q.rear->flag<<endl;
 	temp=1;
 	while(temp<MAX_NUM)
 	{
 		GetHead_Sq_L(Q,e);
-		//	cout<<"ppppppp"<<endl;
-		cout<<endl<<"e:"<<e<<"temp:"<<temp<<endl;
 		update_Queue(Q,temp*2-e);
 		temp=temp*2-e;
-		cout<<temp<<endl;
-
 		print(Q);
-	//	cin>>p;
 	}
 
 	return 0;
