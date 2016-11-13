@@ -27,8 +27,6 @@ Status Push(SqStack &S,ElemType e);
 Status Pop(SqStack &S,ElemType &e);
 Status StackTraverse(SqStack &S,Status (*visit)());
 void Increment(SqStack &S);
-//从栈底到栈顶依次对栈中的每个元素调用visit()
-//--------------------------------------------------
 Status InitStack(SqStack &S)
 {
 	S.base = (ElemType *)malloc(STACK_INIT_SIZE * sizeof(ElemType));
@@ -70,15 +68,17 @@ Status Pop(SqStack &S,ElemType &e){
 	e = S.base[S.top--];
 	return OK;
 }
-// Status StackTraverse(SqStack &S,Status (*visit)()){
-
-// }
+void ERROR_OVERFLOW(char *q)
+{
+	cout<<q;
+	exit(1);
+}
 void Increment(SqStack &S)
 {
 	int i;
 	ElemType *newstack;
 	newstack = new ElemType[S.stacksize+STACKINCREMENT];
-	if(!newstack) ERROR("OVERFLOW");
+	if(!newstack) ERROR_OVERFLOW("OVERFLOw");
 	for(i=0;i<S.top;i++)
 	{
 		newstack[i]=S.base[i];

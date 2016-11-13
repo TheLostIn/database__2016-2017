@@ -1,11 +1,13 @@
 #include<iostream>
 #include<fstream>
+#include<string>
 using namespace std;
 struct addr
 {
 	int place;
 	addr *next;
 };
+
 struct letter
 {
 	char alphabet;
@@ -14,7 +16,11 @@ struct letter
 	letter *sibling;
 	letter *next;
 };
-
+struct show
+{
+	int length;
+	letter *p;
+};
 void init_letter(letter *p)
 {
 	p->addr_count=NULL;
@@ -117,24 +123,37 @@ void set_record(char chr,letter *p,int place)
 void display(letter *forest)
 {
 	int i=0;
+	string a;
 	letter *q_l;
 //	q=NULL;
 	cout<<"oooo"<<endl;
 	for(i=0;i<52;i++)
 	{
 		cout<<forest[i].alphabet<<" ";
+		a+=forest[i].alphabet;
 		if(forest[i].next!=NULL)
 		{
 			q_l=forest[i].next;
+			
 				while(q_l->next!=NULL)
 				{
-					cout<<q_l->alphabet<<"\t";
+					a+=q_l->alphabet;
+					if(q_l->count>0)
+					{
+					//	a+=q_l->alphabet;
+						cout<<a<<" "<<q_l->count<<"\t";
+					}
+					
+				//	cout<<q_l->alphabet<<"\t";
+				
 					q_l=q_l->next;
 				}	
-				cout<<q_l->alphabet<<"\t";
+				a+=q_l->alphabet;
+				cout<<a<<"\t";
 				cout<<q_l->count;
 		}		
 		cout<<" "<<endl;
+		a='.';
 
 	}
 }
@@ -248,6 +267,9 @@ void man_txt()
 int main()
 {
 	man_txt();
+
+//	cout<<a;
+//	cout<<a<<endl;
 	cout<<('A'=='A')<<endl;
 	return 0;
 }
