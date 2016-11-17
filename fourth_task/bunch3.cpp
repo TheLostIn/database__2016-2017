@@ -69,6 +69,7 @@ letter* set_p(char chr,letter *p,letter *forest)
 	{
 		p=&forest[((int)chr-'a'+26)];
 	}
+//	cout<<"first_al: "<<p->alphabet<<endl;
 	return p;
 }
 letter* insert(char chr,letter *p)
@@ -80,31 +81,31 @@ letter* insert(char chr,letter *p)
 			q_l->sibling=NULL;
 			q_l->next=NULL;
 			q_l->count=0;
-	
+		//	cout<<"pppp---"<<endl;
 			if(p->next==NULL)
 			{
 				p->next=q_l;
 				p=q_l;
-		
+			//	cout<<"ppp "<<chr<<endl;
 			}else{
 				origin=p;
 				p=p->next;
 				cur=p;
-		
-			
+			//	cout<<"--------------"<<endl;
+				//cout<<"q_l : "<<q_l->alphabet<<"p->al: "<<p->alphabet<<endl;
 				if(p->alphabet>chr)
 				{
 					q_l->sibling=p;
 					origin->next=q_l;
 					p=q_l;
-		
+			//		return p;
 				}else{
-			
+				//		cout<<"q_l : "<<q_l->alphabet<<"p->al: "<<p->alphabet<<endl;		
 					while(p!=NULL)
 					{
 						if(p->alphabet<chr)
 						{
-					
+						//	cout<<"test: "<<p->alphabet<<" ";
 							cur=p;
 							p=p->sibling;
 						}else{
@@ -114,17 +115,17 @@ letter* insert(char chr,letter *p)
 
 					if(p==NULL)
 					{
-			
+				//		cout<<"q_l : "<<q_l->alphabet<<"p->al: "<<p->alphabet<<endl;
 						cur->sibling=q_l;
 						p=q_l;
-				
+					//	cout<<"q_l : "<<q_l->alphabet<<"p->al: "<<p->alphabet<<endl;
 					}else if(p->alphabet>chr)
 					{
-				
+					//	cout<<"xiao   q_l : "<<q_l->alphabet<<"p->al: "<<p->alphabet<<endl;
 						q_l->sibling=p;
 						cur->sibling=q_l;
 						p=q_l;
-	
+		//				cout<<"sibling: "<<p->alphabet<<endl;
 					}										
 				}
 			}
@@ -152,6 +153,7 @@ link push(link Head,string a,letter *l)
 		return Head;
 	}
 	p->p=l;
+//	cout<<"push: "<<l->alphabet<<endl;
 	p->next=Head;
 	p->cur_str=a;
 	return p;
@@ -160,14 +162,19 @@ link pop(link Head)
 {
 	link p;
 	p=Head;
+//	cout<<"1"<<endl;
+//	cout<<"cur_str: "<<(p->cur_str)<<endl;
 	if(p==NULL)
 	{
 		cout<<"\nStack is Empty\n";
 	}
 	else{
+//		cout<<"2"<<endl;
 		p=p->next;
-
+//		cout<<"3"<<endl;
+	//	delete(Head);
 	}
+//	cout<<"pop: "<<p->p->alphabet<<endl;
 	return p;
 }
 void travel(letter *forest)
@@ -180,11 +187,11 @@ void travel(letter *forest)
 	Head=NULL;
 	for(i=0;i<52;i++)
 	{
-		cout<<forest[i].alphabet<<endl;
-	//	a+=forest[i].alphabet;
+		cout<<forest[i].alphabet<<" ";
+		a+=forest[i].alphabet;
 		if(forest[i].next!=NULL)
 		{
-			q_l=&forest[i];
+			q_l=forest[i].next;
 		
 				while(q_l!=NULL)
 				{
@@ -203,15 +210,14 @@ void travel(letter *forest)
 					a+=q_l->alphabet;
 					if(q_l->count>0)
 					{
-						addr *p_arr;
-						p_arr=q_l->addr_count;
-						cout<<a<<"\t place: \t";
-						while(p_arr)
-						{
-						//	cout<<"true "<<p_arr->place;
-							p_arr=p_arr->next;
-						}
-						cout<<"\tcount: \t"<<q_l->count<<endl;
+							addr *p_arr;
+								p_arr=q_l->addr_count;
+								while(p_arr)
+								{
+									cout<<" "<<p_arr->place<<" ";
+									p_arr=p_arr->next;
+								}
+						cout<<a<<" -+"<<q_l->count<<"\t";
 					}	
 					if(q_l->next)
 					{
@@ -234,7 +240,7 @@ void travel(letter *forest)
 						if(q_l->sibling!=NULL)
 						{
 							Head=push(Head,a,q_l->sibling);
-//							cout<<"Head"<<Head->p->alphabet<<endl;
+							cout<<"Head"<<Head->p->alphabet<<endl;
 						}
 						a+=q_l->alphabet;
 						if(q_l->count>0)
@@ -267,27 +273,26 @@ void push_d_s(letter *p,int & top)
 }
 void read_ps(int top)
 {
-	cout<<"\t";
 	for(int i=1;i<=top;i++)
 	{
 		cout<<p_s[i].p->alphabet;
 	}
 	addr *p;
 	p=p_s[top].p->addr_count;
-	if(p)
-		cout<<"\tplace: ";
 	while(p)
 	{
 		cout<<" "<<p->place<<" ";
 		p=p->next;
 	}
-	cout<<" count: "<<p_s[top].p->count<<endl;
+	cout<<" "<<p_s[top].p->count<<endl;
 }
 letter* pop_d_s(int &top)
 {
 	int tmp;
 	tmp=top;
 	top--;
+//	top--;
+//	cout<<"pop: "<<p_s[tmp].p->alphabet<<" "<<p_s[tmp].p->alphabet;
 
 	return p_s[tmp].p;
 
@@ -302,27 +307,17 @@ void display_stack(letter *forest)
 		top=0;
 		cout<<forest[i].alphabet<<" "<<endl;		
 		push_d_s(&forest[i],top);
-		q_l=&forest[i];
-		if(q_l->count>0)
-		{
-			read_ps(top);
-		}
-			
+		q_l=forest[i].next;
 		if(forest[i].next)
 		{
-			q_l=forest[i].next;
 			while(top!=0)
 			{
-		
 				while(q_l!=NULL)
-				{		
-					push_d_s(q_l,top);			
-					if(q_l->count>0)
-					{
-						read_ps(top);
-					}
+				{
+					push_d_s(q_l,top);
 					q_l=q_l->next;
 				}
+				read_ps(top);
 				q_l=pop_d_s(top);
 				while(q_l->sibling==NULL&&top!=0) 
 				{
@@ -346,7 +341,7 @@ void display(letter *forest)
 	int i=0;
 	string a;
 	letter *q_l;
-//	cout<<"oooo"<<endl;
+	cout<<"oooo"<<endl;
 	for(i=0;i<52;i++)
 	{
 		cout<<forest[i].alphabet<<" ";
@@ -405,7 +400,7 @@ void man_txt()
 				p=insert(chr,p);
 			}
 		}
-
+	//	set_record(chr,p,place);
 			q = new addr;
 		q->next=NULL;
 		q->place=place;
@@ -414,26 +409,27 @@ void man_txt()
 		m=p->addr_count;
 		if(p->addr_count!=NULL)
 			m=m->next;
-	
+		//	p->addr_count=q;
 		if(p->addr_count)
 		{
 			q->next=p->addr_count;
 			p->addr_count=q;
-//			cout<<"1: "<<1<<endl;
+			cout<<"1: "<<1<<endl;
 		}		
 		else
 		{
 			p->addr_count=q;
-//			cout<<"0: "<<0<<endl;
+			cout<<"0: "<<0<<endl;
 		}
 		
-//		cout<<place<<endl;
+		cout<<place<<endl;
+//setrecord
 		place=f1.tellg();
 		chr=f1.get();
 	}
 	f1.close();
 	travel(forest);
-	display_stack(forest);
+//	display_stack(forest);
 	cout<<"end";
 
 }
@@ -443,5 +439,12 @@ void man_txt()
 int main()
 {
 	man_txt();
+	string a;
+	a="abc";
+	cout<<a.length()<<endl;
+	a="bkkkkk";
+	a[2]='\0';
+	cout<<a.length()<<endl;
+	cout<<('A'=='A')<<endl;
 	return 0;
 }
