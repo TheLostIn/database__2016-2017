@@ -1,10 +1,3 @@
-//four
-//Íê³ÉµÚÒ»¡¢¶ş¡¢Èı´ÎÉÏ»úÌâ
-//1£®ÊäÈëÏ¡Êè¾ØÕó£¬½¨Á¢Ï¡Êè¾ØÕóÈıÔª×éË³Ğò½á¹¹£¬ÊµÏÖ×ªÖÃ£¨1¡¢2£©£»
-//2. Í³¼ÆÒ»ÆªÓ¢ÎÄÎÄÕÂÖĞ¸÷µ¥´Ê³öÏÖµÄÆµ¶È¡£
-//   ÊäÈë£º Ò»Æªtxt¸ñÊ½Ó¢ÎÄÄÚÈİ
-//   Êä³ö£º µ¥´Ê£ºÆµ¶È      ÀıÈç£º the: 10;  long: 5 
-//3. ÀûÓÃÕ»²Ù×÷ÊµÏÖ°Ë»ÊºóÎÊÌâÇó½â (Ñ¡×öÌâ) ¡£
 #include<iostream>
 using namespace std;
 #include<fstream>
@@ -30,24 +23,16 @@ void ReadSMatrix(TSMatrix &M)
 	fstream f1;
 	int i=0;
 	f1.open("test.txt",ios::in);
-	f1>>M.mu>>M.nu;//æ€»è¡Œæ•° æ€»åˆ—æ•°
-
-//	num = new int [M.nu];
-//	cpot = new int [M.nu];
-//	int num[M.nu]={0};
-//	int cpot[M.tu]={0};
+	f1>>M.mu>>M.nu;
 	while(!f1.eof())
 	{
 		f1>>M.data[i].row>>M.data[i].col>>M.data[i].e;
-//		num[M.data[i].col]++;
-//		cout<<M.data[i].row<<endl;
 		M.tu++;
 		i++;
 	}
-	cout<<"ppp"<<endl;
 	for(i=0;i<M.tu;i++)
 	{
-		cout<<M.data[i].row<<" "<<M.data[i].col<<endl;
+		cout<<M.data[i].row<<" "<<M.data[i].col<<" "<<M.data[i].e<<endl;
 	}
 	cout<<" tu : "<<M.tu<<endl;
 	f1.close();
@@ -68,7 +53,7 @@ void TransposeSMatrix(TSMatrix M,TSMatrix &T)
 		{
 			num[i]=0;
 			cpot[i]=0;
-			cout<<num[i]<<endl;
+		//	cout<<num[i]<<endl;
 		}
 		for(i=0;i<M.tu;i++)
 		{
@@ -79,12 +64,12 @@ void TransposeSMatrix(TSMatrix M,TSMatrix &T)
 		{
 			cpot[i]=cpot[i-1]+num[i-1];
 		}
-		for(i=0;i<M.nu;i++)
+	/*	for(i=0;i<M.nu;i++)
 		{
 			cout<<num[i]<<" "<<cpot[i]<<endl;
 			
 		}
-		for(i=0;i<M.tu;i++)
+	*/	for(i=0;i<M.tu;i++)
 		{
 			j=M.data[i].col;
 			T.data[cpot[j]].row=M.data[i].col;
@@ -92,6 +77,7 @@ void TransposeSMatrix(TSMatrix M,TSMatrix &T)
 			T.data[cpot[j]].e=M.data[i].e;
 			cpot[j]++;
 		}
+		cout<<endl;
 		for(i=0;i<T.tu;i++)
 		{
 			cout<<T.data[i].row<<" "<<T.data[i].col<<" "<<T.data[i].e<<endl;

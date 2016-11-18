@@ -432,8 +432,8 @@ void man_txt()
 		chr=f1.get();
 	}
 	f1.close();
-	travel(forest);
-	display_stack(forest);
+	travel(forest);//stringÊä³ö
+	display_stack(forest);//Õ»Êä³ö
 	cout<<"end";
 
 }

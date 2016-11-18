@@ -32,7 +32,7 @@ void man_txt()
 		if(chr!=','&&chr!='.'&&chr!='\"'&&chr!='?'&&chr!='!')
 		{
 			f2<<chr;
-			cout<<chr;
+		//	cout<<chr;
 		}
 	}
 	f1.close();
@@ -70,10 +70,7 @@ int comp()
 {
 
 	fstream f1;
-	string a,b,c;
-	a="what";
-	c="b";
-	b="whas";
+
 	f1.open("ee2.txt",ios::in);
 
 	int i=0;
@@ -100,8 +97,8 @@ int comp()
 		cout<<w[i].words<<" "<<w[i+26].words<<endl;
 	}
 
-	cout<<(char)('A'+5)<<endl;
-	cout<<(a.substr(0,1).compare("a"))<<endl;
+//	cout<<(char)('A'+5)<<endl;
+//	cout<<(a.substr(0,1).compare("a"))<<endl;
 	while(!f1.eof())
 	{	
 		place=f1.tellg();
@@ -137,28 +134,31 @@ int comp()
 				cur[i]->w_p_cur_next=w_p;
 			//	cout<<"ppp"<<endl;
 			}else{
-				cout<<cur[i]->words<<" "<<tmp<<" "<<cur[i]->words.compare(tmp)<<" "<<(cur[i]->words.compare(tmp)<0&&cur[i]->next);
+		//		cout<<cur[i]->words<<" "<<tmp<<" "<<cur[i]->words.compare(tmp)<<" "<<(cur[i]->words.compare(tmp)<0&&cur[i]->next);
 				if(cur[i]->words.compare(tmp)>0)
 				{
-					cout<<"++++++++++++++++++"<<endl;
+			/*		cout<<"++++++++++++++++++"<<endl;
 					cout<<cur[i]->words<<" "<<endl;
 					cout<<tmp<<endl;
 					cout<<"++++++++"<<endl;
+					*/
 
 					while(cur[i]->words.compare(tmp)>0&&cur[i]!=&w[i])
 					{
 						cur[i]=cur[i]->pre;
-						cout<<"---------"<<endl;
+					//	cout<<"---------"<<endl;
 					}
-					cout<<"++++++++++++++++++"<<endl;
+			/*		cout<<"++++++++++++++++++"<<endl;
 					cout<<cur[i]->words<<" "<<endl;
 					cout<<tmp<<endl;
 					cout<<"++++++++"<<endl;
+					*/
 				}else if(cur[i]->words.compare(tmp)<0){
-					cout<<"................."<<endl;
+				/*	cout<<"................."<<endl;
 					cout<<cur[i]->words<<" "<<endl;
 					cout<<tmp<<endl;
 					cout<<"..........."<<endl;
+					*/
 					while(cur[i]->words.compare(tmp)<0&&cur[i]->next)
 					{
 						cur[i]=cur[i]->next;
@@ -169,10 +169,11 @@ int comp()
 							cur[i]=cur[i]->pre;
 						}
 					
-					cout<<"..........."<<endl;
+				/*	cout<<"..........."<<endl;
 					cout<<cur[i]->words<<" "<<endl;
 					cout<<tmp<<endl;
 					cout<<".........."<<endl;
+					*/
 				}
 				if(cur[i]->words.compare(tmp)==0)
 				{
