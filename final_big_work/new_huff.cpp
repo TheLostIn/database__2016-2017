@@ -16,6 +16,8 @@ struct huff
 	int left;
 	int right;
 	int par;
+	int chr;
+	huff(int a=255){chr=a;}
 };
 int N;
 huff *init_huff(huff *huff_man,map<char,int> cnt)
@@ -28,6 +30,7 @@ huff *init_huff(huff *huff_man,map<char,int> cnt)
 	{
 	//	cout<<(*rit).first<<","<<(*rit).second<<endl;
 		huff_man[i].data=(*rit).second;
+		huff_man[i].chr=(*rit).first;
 		huff_man[i].par=0;
 		huff_man[i].left=0;
 		huff_man[i].right=0;
@@ -72,7 +75,7 @@ map<char,int> read_origin()
 	fstream f1;
 	int i;
 	int n=0;
-	f1.open("huff_origin1.txt",ios::in);
+	f1.open("huff_origin.txt",ios::in);
 	while(!f1.eof())
 	{
 		chr=f1.get();
@@ -100,7 +103,7 @@ void display(huff *huff_man)
 	int i;
 	for(i=1;i<N;i++)
 	{
-		cout<<i<<" "<<huff_man[i].data<<" "<<huff_man[i].par<<" "<<huff_man[i].left<<" "<<huff_man[i].right<<endl;
+		cout<<i<<" "<<huff_man[i].chr<<" "<<huff_man[i].data<<" "<<huff_man[i].par<<" "<<huff_man[i].left<<" "<<huff_man[i].right<<endl;
 	}
 }
 huff* merge_tree(huff *huff_man,int t1 ,int t2,int place)
@@ -195,37 +198,46 @@ void make_tree(huff *huff_man)
 void turn_txt_to_huff()
 {
 	fstream f1,f2,f3;
-	char chr;
+	int chr;
 	string code;
 	int i=1;
 	f1.open("huff_man.txt",ios::in);
-	map<char,string> encode;
+	map<int,string> encode;
 	while(!f1.eof())
 	{
-		f1>>chr>>code;
+		if(f1.eof())
+			break;
+		f1>>chr;
+		if(f1.eof()) break;
+		f1>>code;
 		encode[chr]=code;
 	}
 	f1.close();
 	f2.open("encode.txt",ios::out);
-	f3.open("huff_origin.txt",ios::in);
+	f3.open("huff_origin.txt",ios::in);  
+	char ch;
 	while(!f3.eof())
 	{
-		f3>>chr;
-		f2<<encode[chr];
+		ch=f3.get();
+		f2<<encode[(int)ch];
 	}
 	f2.close();
 	f3.close();
 }
-void write_tree(map<char,string>en_code,huff * huffman)
+void write_tree(map<char,string>en_code,huff * huff_man)
 {
 	fstream f1,f2;
 	f1.open("huff_man.txt",ios::out);
 	f2.open("huff_man_tree.dat",ios::out|ios::binary);
-	f2.write((char *)huff_man,sizeof(huff_man)*N);
+	cout<<"write:"<<endl;
+	cout<<sizeof(huff_man)<<" "<<sizeof(huff)*N<<" "<<endl;
+	for(int i=0;i<N;i++)
+		f2.write((char *)&huff_man[i],sizeof(huff));
+	display(huff_man);
 	for(map<char,string>::reverse_iterator rit=en_code.rbegin();rit!=en_code.rend();rit++)
 	{
-		f1<<(*rit).first<<" "<<(*rit).second<<endl;
-		cout<<(*rit).first<<" "<<(*rit).second<<endl;
+		f1<<(int)(*rit).first<<" "<<(*rit).second<<endl;
+		cout<<(int)(*rit).first<<" "<<(*rit).second<<endl;
 	}
 	f1.close();
 	f2.close();
@@ -234,62 +246,59 @@ huff* read_tree()
 {
 	huff *tree;
 	tree=new huff[N];
+	int a;
 	fstream f1;
 	f1.open("huff_man_tree.dat",ios::binary|ios::in);
 	f1.read((char *)tree,sizeof(huff)*N);
 	f1.close();
+	cout<<"tree:"<<endl;
+	system("pause");
 	display(tree);
 	return tree;
 }
-map<int,char> read_code()
-{
 
-
-}
 void decode()
 {
 	fstream f1,f2;
 	f1.open("encode.txt",ios::in);
 	f2.open("decode.txt",ios::out);
-	
+	cout<<"decode"<<endl;
 	int tmp;
 	char chr;
 	huff *huff_man;
 	huff_man=read_tree();
-	map<int,char> encode;
-	encode=read_code();
+//	map<int,char> encode;
+//	encode=read_code();
 	display(huff_man);
+//	system("pause");
 	while(!f1.eof())
 	{
 		tmp=N-1;
 		cout<<tmp;
 		while(((tmp==N-1)||tmp>N/2)&&!f1.eof())
 		{
-			cout<<"p"<<endl;
+		//	cout<<"p"<<endl;
 			f1>>chr;
 			cout<<chr<<endl;
 			if(chr=='0')
 			{
 				tmp=huff_man[tmp].left;
-				cout<<"left:"<<tmp<<"par : "<<huff_man[tmp].par<<endl;
+			//	cout<<"left:"<<tmp<<"par : "<<huff_man[tmp].par<<endl;
 			}else if(chr=='1')
 			{
 				tmp=huff_man[tmp].right;
-				cout<<"right:"<<tmp<<"par : "<<huff_man[tmp].par<<endl;
+			//	cout<<"right:"<<tmp<<"par : "<<huff_man[tmp].par<<endl;
 			}
 		}
-		cout<<"out"<<endl;
-		cout<<tmp<<endl;
+	//	cout<<"out"<<endl;
+	//	cout<<tmp<<endl;
 		if(!f1.eof())
 		{
-			if(tmp<=26)
+			if(huff_man[tmp].chr!=-1)
 			{
-				f2<<(char)(tmp+'A'-1);
-			}else{
-				f2<<(char)(tmp+'a'-26);
+				f2<<(char)huff_man[tmp].chr;	
+				cout<<(char)huff_man[tmp].chr;
 			}
-			while(!f1.eof()&&chr==' ')
-			f1>>chr;
 		}
 		
 	}
@@ -299,7 +308,15 @@ void decode()
 cout<<(int)'?'<<endl;
 
 }
+void de_huff()
+{
+	huff * huff_man;
+	huff_man=read_tree();
+//	turn_txt_to_huff(encode);
+	display(huff_man);
+	decode();
 
+}
 int main()
 {
 	cout<<"p"<<endl;
@@ -310,9 +327,6 @@ int main()
 	huff * huff_man;
 	cnt = read_origin();
 	huff_man = init_huff(huff_man,cnt);
-	
-//	string *encode;
-	
 
 	make_tree(huff_man);	
 	display(huff_man);
@@ -323,22 +337,10 @@ int main()
 		en_code[(*rit).first]=encode[i++];
 	}
 	write_tree(en_code,huff_man);
+
 	turn_txt_to_huff();
 	
-
-//	
-//
-//	huff_man=read_tree();
-//	turn_txt_to_huff(encode);
-//	display(huff_man);
-/*	
-
-	display(huff_man);
-
-
-	*/
-//	huff_man=read_tree();
-//	decode(huff_man);
+	de_huff();
 
 	return 0;
 }
