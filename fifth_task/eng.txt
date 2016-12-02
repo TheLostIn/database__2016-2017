@@ -1,0 +1,90 @@
+adcdsdfsdfsdf asdasd asda sd a sd 
+
+
+/*
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<iostream>
+#include<fstream>
+#include<string>
+#include<string.h>
+using namespace std;
+typedef int ElemType;
+typedef int Status;
+#define ok 1
+typedef struct LNode
+{
+	char words[24];//单词数组
+	ElemType num;//单词所含字符个数
+	struct LNode *next;
+}Sqlist,*LinkList;
+Status ShowTxt(LinkList &L)//显示全文的函数
+{	ElemType i=0;
+	LinkList p,s;
+	p=L;
+	p->next=NULL;
+	fstream datafile;
+	datafile.open("eng.txt",ios::in);
+	p->num=0;
+
+	string c;//获取文件中的字符
+
+	while(!datafile.eof())
+	{
+		datafile<<c;
+		cout<<c;
+	}
+	
+	/*
+	while(!datafile.eof())//判断是否到文件尾
+	{
+		p->words[i]=c;
+		cout<<p->words[i];
+		i++;
+		(p->num)++;
+		if(c==' ')
+		{
+		p->words[i]='\0';
+		s=(LinkList)malloc(sizeof(LNode));
+		s->num=0;i=0;
+		s->next=p->next;
+		p->next=s;
+		cout<<p->words;//判断是否能够输出单词
+	    }
+		datafile.get(c);
+	}
+	cout<<"尼玛啊啊啊啊啊啊啊啊 啊啊啊"<<p->next->next->words;
+	*/
+	datafile.close();
+	return ok;
+}
+Status TraverseList(LinkList L)
+{
+	ElemType i;
+	LinkList p=L->next;
+	cout<<"dadadffff";
+	while(p)
+	{
+		cout<<"你好";
+		//for(i=0;i<=p->num;i++)
+		cout<<p->words;
+		//cout<<p->num;
+		p=p->next;
+	}
+	cout<<endl;
+	return ok;
+}
+Status main()
+{
+	LinkList L;
+	L=(LinkList)malloc(sizeof(LNode));
+	L->next=NULL;
+	ShowTxt(L);
+//	TraverseList(L);
+	cout<<endl;
+//	cout<<"       "<<L->next->words;
+	return 0;
+}
+
+*/
