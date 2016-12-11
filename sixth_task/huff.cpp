@@ -73,12 +73,13 @@ map<char,int> read_origin()
 {
 	map<char,int> cnt;
 	char chr;
-	fstream f1;
+//	fstream f1;
 	int i;
 	int n=0;
 	int rand_num=200;
 	srand(time(NULL));
-	f1.open("huff_origin.txt",ios::in);
+	cout<<"read"<<endl;
+//	f1.open("huff_origin.txt",ios::in);
 	while(rand_num--)
 	{
 		chr=rand()%255;
@@ -95,7 +96,7 @@ map<char,int> read_origin()
 	{
 		cout<<(*rit).first<<","<<(*rit).second<<endl;
 	}
-	f1.close();
+//	f1.close();
 	cout<<endl<<n<<endl;
 	N=n*2;
 	cout<<N;
@@ -328,7 +329,7 @@ int main()
 	map<char,string> en_code;
 	string * encode;
 	huff * huff_man;
-	cnt = read_origin();
+//	cnt = read_origin();
 /*	huff_man = init_huff(huff_man,cnt);
 
 	make_tree(huff_man);	
