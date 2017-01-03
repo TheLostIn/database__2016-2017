@@ -86,6 +86,7 @@ binary_tree* read_txt_num(binary_tree * root)
 		f1>>tmp;
 		q = new binary_tree;
 		q->data=tmp;
+		cout<<"p"<<endl;
 		if(p!=NULL){
 			insert(p,q);
 		}
@@ -97,7 +98,7 @@ binary_tree* read_txt_num(binary_tree * root)
 		}
 	}
 
-	//pre_read(p);
+	pre_read(p);
 	return root;
 
 }

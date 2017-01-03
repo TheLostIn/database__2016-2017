@@ -1,3 +1,21 @@
+/*
+9 11
+0 1 2 3 4 5 6 7 8
+0 1 6
+0 2 4
+0 3 5
+1 4 1
+2 4 1
+3 5 2
+4 6 9
+4 7 7
+5 7 4
+7 8 4
+6 8 2
+
+*/
+//graph_w.txt
+
 #include<iostream>
 #include<stack>
 #include<map>
@@ -44,6 +62,8 @@ void display_tree(ALGraph G)
 {
 	int n=G.vexnum;
 	int i=0;
+	cout<<n<<endl;
+	cout<<"display"<<endl;
 	while(n--)
 	{
 		EdgeNode_L *p;
@@ -51,7 +71,7 @@ void display_tree(ALGraph G)
 		cout<<G.vexs[i].vex<<": "<<endl;
 		while(p)
 		{
-			cout<<G.vexs[p->adjvex].vex<<" "<<p->weight<<endl;
+			cout<<G.vexs[p->adjvex].vex<<" weight: "<<p->weight<<endl;
 			p=p->nextedge;
 		}
 		i++;
@@ -70,19 +90,20 @@ void CreateDG_ALG(ALGraph &G,int n,int e)
 	int k;
 	f1>>G.vexnum;
 	f1>>G.edgenum;
-//	cout<<G.vexnum<<" "<<G.edgenum<<endl;
+	cout<<G.vexnum<<" "<<G.edgenum<<endl;
 //	G.edgenum=e;
+//	cout<<e<<endl;
 	for(i=0;i<G.vexnum;i++)
 	{
 		f1>>G.vexs[i].vex;
-//		cout<<G.vexs[i].vex<<" ";
+		cout<<G.vexs[i].vex<<" ";
 	}
 	for(k=0;k<G.edgenum;++k)
 	{
 		f1>>v1>>v2>>weight;
 		i=LocateVex_L(G,v1);
 		j=LocateVex_L(G,v2);
-	//	cout<<"i: "<<i<<"j: "<<j<<endl;
+//		cout<<"i: "<<i<<"j: "<<j<<endl;
 		while((i<0)||(i>(G.vexnum-1))||(j<0)||(j>(G.vexnum-1)))
 		{
 			cout<<"The edge doesn't exist,please input again"<<endl;
@@ -104,8 +125,10 @@ void CreateDG_ALG(ALGraph &G,int n,int e)
 		p->nextedge=G.vexs[j].firstedge;
 		G.vexs[j].firstedge=p;
 		G.vexs[i].indegree++;
+	//	cout<<G.vexs[i].vex<<endl;
 	}
 	f1.close();
+//	cout<<"end create"<<endl;
 }
 
 int get_mini(ALGraph G,int n)
@@ -135,7 +158,6 @@ int main()
 {
 	ALGraph G;
 	int n;
-	int e;
 	int min;
 	int i=3;
 	int cur;

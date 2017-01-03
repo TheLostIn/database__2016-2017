@@ -41,6 +41,22 @@ int LocateVex_L(ALGraph G,ElemType x)
 	if(k<G.vexnum) return k;
 		else return -1;
 }
+//if input is file 
+/*
+6 9
+0 1 2 3 4 5
+1 4
+0 1
+0 2
+0 5
+2 5
+2 3
+3 5
+3 4
+4 5
+*/
+//save as graph.txt
+
 void CreateDG_ALG(ALGraph &G,int n,int e)
 {
 	fstream f1;
@@ -51,24 +67,29 @@ void CreateDG_ALG(ALGraph &G,int n,int e)
 	int k;
 	f1>>G.vexnum;
 	f1>>G.edgenum;
+//	cin>>G.vexnum;
+//	cin>>G.edgenum;
 	cout<<G.vexnum<<" "<<G.edgenum<<endl;
-//	G.edgenum=e;
+	G.edgenum=e;
 	for(i=0;i<G.vexnum;i++)
 	{
 		f1>>G.vexs[i].vex;
-		cout<<G.vexs[i].vex<<" ";
+//		cin>>G.vexs[i].vex;
+		cout<<"i: "<<i<<"¡¡"<<G.vexs[i].vex<<" ";
 	}
 	cout<<endl;
 	for(k=0;k<G.edgenum;++k)
 	{
 		f1>>v1>>v2;
+//		cin>>v1>>v2;
 		i=LocateVex_L(G,v1);
 		j=LocateVex_L(G,v2);
-		cout<<"i: "<<i<<"j: "<<j<<endl;
+	//	cout<<"iy: "<<i<<"j: "<<j<<endl;
 		while((i<0)||(i>(G.vexnum-1))||(j<0)||(j>(G.vexnum-1)))
 		{
 			cout<<"The edge doesn't exist,please input again"<<endl;
 			f1>>v1>>v2;
+		//	cin>>v1>>v2;
 			i=LocateVex_L(G,v1);
 			j=LocateVex_L(G,v2);
 		}
@@ -84,6 +105,7 @@ int LocateVex(MGraph G,ElemType x)
 {
 	int k;
 	for(k=0;(k<G.vexnum)&&(G.vexs[k]!=x);k++);
+//	cout<<"k: "<<k<<" "<<x<<" "<<G.vexnum<<endl;
 	if(k<G.vexnum) return k;
 		else return -1;
 }
@@ -96,29 +118,27 @@ void CreateUDG_MG(MGraph &G,int n,int e)
 	int k;
 	f1>>G.vexnum;
 	f1>>G.edgenum;
+//	cin>>G.vexnum;
+//	cin>>G.edgenum;
 	cout<<G.vexnum<<" "<<G.edgenum<<endl;
 //	G.edgenum=e;
 	for(i=0;i<G.vexnum;i++)
 	{
+	//	cin>>G.vexs[i];
 		f1>>G.vexs[i];
-		cout<<G.vexs[i]<<" ";
 	}
 	cout<<endl;
 	for(i=0;i<G.vexnum;i++)
 		for(j=0;j<G.vexnum;j++) 
 			G.edges[i][j]=0;
-	for(i=0;i<G.vexnum;i++)
-	{
-	//	f1>>G.vexs[i];
-		cout<<G.vexs[i]<<" ";
-	}
 	cout<<endl;
 	for(k=0;k<G.edgenum;++k)
 	{
 		f1>>v1>>v2;
+	//	cin>>v1>>v2;
 		i=LocateVex(G,v1);
 		j=LocateVex(G,v2);
-		cout<<"i: "<<i<<"j: "<<j<<endl;
+	//	cout<<"i: "<<i<<"j: "<<j<<endl;
 		while((i<0)||(i>(G.vexnum-1))||(j<0)||(j>(G.vexnum-1)))
 		{
 			cout<<"The edge doesn't exist,please input again"<<endl;
@@ -157,7 +177,6 @@ void BFSTraverse(MGraph G)
 			{
 				int u;
 				u=q.front();
-				//cout<<"get front:"<<u<<endl;
 				for(int w=0;w<G.vexnum;w++)
 				{
 				
@@ -247,11 +266,16 @@ int main()
 	CreateUDG_MG(G,10,10);
 	display_G(G);
 	cout<<endl;
+	cout<<"BFS :"<<endl;
 	BFSTraverse(G);
 	cout<<endl;
+	cout<<"DFS :"<<endl;
 	DFSTraverse(G);
 	cout<<endl<<endl;
 	CreateDG_ALG(A_G,1,1);
+	cout<<"DFS :"<<endl;
 	DFSTraverse_L(A_G);
+	cout<<endl;
 	return 0;
 }
+

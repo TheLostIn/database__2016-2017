@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Bomb</title>
+<meta name="description" content="bomb">
+<meta name="keywords" content="bomb">
+<link href="css/bomb.css" rel="stylesheet">
+<script type="text/javascript" src="js/bomb.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<input type="text" name="width" id="width">
+	<input type="text" name="height" id="height">
+	<input type="button" name="submit" onclick="start()">
+    <div id="bg" onclick="">
+    	
+    <!-- <input type="button" value="pp" data_x='9' data_y='8' name="w" onclick="hh(this)"> -->
+    </div>
+</body>
+<script type="text/javascript">
+function start()
+{
+	console.log("start");
+    var flag=0;
+	var text='';
+	var width=$('#width').val();
+	var height=$('#height').val();
+	height=parseInt(height);
+	width=parseInt(width);
+	var a=Create_bomb(width,height);
+	
+	console.log(a);
+
+	var count =0;
+	for(var i=1;i<=height;i++)
+	{
+		for(var j=1;j<=width;j++)
+		{
+			count++;
+			text+=`<input type="button" value=" "  name="${count}" id="${count}" onmousedown="check_bomb(this.id)">`;
+		}
+		text+=`</br>`;
+	}
+	$('#bg').append(text);
+}
+document.oncontextmenu=function(e){return false;}
+
+</script>
+</html>

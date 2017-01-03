@@ -1,11 +1,11 @@
 /*
-新建txt文件 命名为 "bin_tree.txt",内容格式 : 
-
- 23 45 56 23 67
-89 23 4 5 68
-23 45 5 23 45
-12 23 45 111 4566 
-  */
+1 2 3  4 0 6 0 0 9 10 11 0 13 0 0
+*/
+//"bin2.txt"
+/*
+1 2 3 0 0 6 0 0 9 10 0 0 13 0 0 #
+*/
+//bin.txt
 #include<iostream>
 #include<fstream>
 #include<stack>
@@ -45,7 +45,7 @@ void insert(binary_tree *cur,binary_tree * p)
 }
 
 
-//读文件：：：
+//read file
 binary_tree* read_txt_num(binary_tree * root)
 {
 	fstream f1;
@@ -177,12 +177,12 @@ int main()
 
 //	fstream f1;
 	
-	f1.open("bin2.txt",ios::in); //not bin
-	//f1.open("bin.txt",ios::in);//is bin
+	//f1.open("bin2.txt",ios::in); //not bin
+	f1.open("bin.txt",ios::in);//is bin
 	CreateBiTree(root);
 	check_is_total_bin(root);
 	f1.close();
-	pre_read(root);
+//	pre_read(root);
 	//root=read_txt_num(root);
 //	cout<<"The height of the binary tree: "<<count_leaves(root)<<endl;
 	return 0;

@@ -4,6 +4,7 @@
 int maxn=30000;
 #define RAND_MAX 32767
 using namespace std;
+int file_num=8;
 void create_order_number()
 {
 	fstream f1;
@@ -33,22 +34,50 @@ void create_invert_number()
 }
 void create_random_number()
 {
-	srand( (unsigned)time( NULL ) );
-	fstream f1;
-	f1.open("random_number.txt",ios::out);
-	int i=0;
-	while(i<maxn)
+	fstream f1[8];
+	char file_name[28];
+	char base_name[]="random_number";
+	char *p;
+	p=file_name;
+	char num[]="0";
+	char base_prefix[]=".txt";
+	int j=0;
+	while(j<file_num)
 	{
-		int p=rand()%RAND_MAX;
-		f1<<p<<" ";
-		i++;
+		num[0]='0'+j;
+		strcpy(file_name,base_name);
+		strcat(file_name,num);
+		strcat(file_name,base_prefix);
+		cout<<file_name<<endl;
+		f1[j].open(file_name,ios::out);
+		int i=0;
+		srand(clock());
+		while(i<maxn)
+		{
+			if(j==0)
+			{
+				f1[j]<<i<<" ";
+			}
+			else if(j==1)
+			{
+				f1[j]<<RAND_MAX-i<<" ";
+			}
+			else
+			{
+				int p=rand()%RAND_MAX;
+				f1[j]<<p<<" ";
+			}
+		
+			i++;
+		}
+		f1[j].close();
+		j++;
 	}
-	f1.close();
 }
 int main()
 {
-	create_order_number();
-	create_invert_number();
+//	create_order_number();
+//	create_invert_number();
 	create_random_number();
 	return 0;
 }

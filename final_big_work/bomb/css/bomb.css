@@ -1,0 +1,17 @@
+.flag
+{
+	background-color: rgba(0, 255, 240, 0.51);
+}
+.bomb_flag
+{
+	background-color: rgba(253, 244, 30, 0.62);
+}
+input
+{
+	width:30px;
+	height: 30px;
+	padding: 0;
+    margin: 0;
+    /*border-style: none;*/
+
+}

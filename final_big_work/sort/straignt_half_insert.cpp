@@ -63,7 +63,7 @@ int search_place(int *a,int i)
 				return mid;
 			}
 			mid=(left+right)/2;
-		//	cout<<left<<" "<<right<<" "<<mid<<endl;
+	//		cout<<left<<" "<<right<<" "<<mid<<endl;
 		//	system("pause");
 		}
 		return mid;
@@ -90,7 +90,7 @@ void Straight_sort(int *a)
 int main()
 {
 	int a[30005];
-	read_numbers(a,1);
+	read_numbers(a,2);
 //	display_number(a);
 	Straight_sort(a);
 	display_number(a);

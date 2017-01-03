@@ -1,3 +1,20 @@
+/*
+9 11
+0 1 2 3 4 5 6 7 8
+0 1 6
+0 2 4
+0 3 5
+1 4 1
+2 4 1
+3 5 2
+4 6 9
+4 7 7
+5 7 4
+7 8 4
+6 8 2
+ */
+//graph_w.txt
+
 #include<iostream>
 #include<stack>
 #include<math.h>
@@ -61,7 +78,7 @@ void CreateDG_ALG(ALGraph &G,int n,int e)
 		f1>>v1>>v2>>weight;
 		i=LocateVex_L(G,v1);
 		j=LocateVex_L(G,v2);
-		cout<<"i: "<<i<<"j: "<<j<<endl;
+	//	cout<<"i: "<<i<<"j: "<<j<<endl;
 		while((i<0)||(i>(G.vexnum-1))||(j<0)||(j>(G.vexnum-1)))
 		{
 			cout<<"The edge doesn't exist,please input again"<<endl;
@@ -85,14 +102,13 @@ void display_G(ALGraph G)
 	for(int i=0;i<G.vexnum;i++)
 	{
 		p=G.vexs[i].firstedge;
-		cout<<" --"<<G.vexs[i].vex<<" "<<endl;
+		cout<<"---"<<G.vexs[i].vex<<" : "<<endl;
 		while(p)
 		{
-			cout<<G.vexs[p->adjvex].vex<<" "<<p->weight<<" ";
+			cout<<G.vexs[p->adjvex].vex<<" weight: "<<p->weight<<endl;
 			p=p->nextedge;
 		}
 		cout<<"indegree: "<<G.vexs[i].indegree<<endl;
-		cout<<endl;
 	}
 }
 void topologicalSort()
@@ -109,7 +125,7 @@ void topologicalSort()
 		if(!G.vexs[i].indegree) 
 			s.push(i);
 	}
-	cout<<"pppp"<<endl;
+	cout<<"topo: "<<endl;
 	while(!s.empty())
 	{
 		m=s.top();
@@ -131,5 +147,6 @@ void topologicalSort()
 int main()
 {
 	topologicalSort();
+	cout<<endl;
 	return 0;
 }

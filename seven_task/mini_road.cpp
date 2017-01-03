@@ -1,3 +1,22 @@
+/*
+9 11
+0 1 2 3 4 5 6 7 8
+0 1 6
+0 2 4
+0 3 5
+1 4 1
+2 4 1
+3 5 2
+4 6 9
+4 7 7
+5 7 4
+7 8 4
+6 8 2
+
+*/
+//graph_w.txt
+
+
 #include<iostream>
 #include<stack>
 #include<math.h>
@@ -140,7 +159,7 @@ int main()
 	mini[cur]=0;
 	while(i<n)
 	{
-		road[i]=i+'0';
+		road[i]=G.vexs[i].vex+'0';
 		i++;
 	}
 	while(n)
@@ -175,15 +194,11 @@ int main()
 	n=G.vexnum;
 	i=0;
 	cout<<endl<<"This is how the road like:"<<endl<<endl;
+	cout<<"Start from "<<v0<<endl;
 	cout<<"\tvex\tweight\troad"<<endl;
 	while(i<n)
 	{
-	
 		cout<<"\t"<<i<<"\t"<<mini[i]<<"\t"<<road[i++]<<endl;
 	}
-
-
-
-
 	return 0;
 }

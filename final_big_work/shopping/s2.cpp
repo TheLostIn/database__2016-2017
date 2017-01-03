@@ -139,10 +139,10 @@ void display_shops(all_shop All_s)
 	}
 	
 }
-void write_shop(shop head)
+void write_shop(shop head,char *save_file)
 {
 	fstream f1;
-	f1.open("shop2.txt",ios::out);
+	f1.open(save_file,ios::out);
 	shop *p;
 	product *q;
 	p=head.next_shop;
@@ -315,49 +315,59 @@ void add_product(all_shop &All_s)
 {
 	//locate the shop
 	fstream f1;
+	int n;
 	f1.open("add_pro.txt",ios::in);
-	string add_s="¼×Óã";
-	shop *p;
-	product *pro;
-	p=locate_shop(All_s,add_s);
-	if(p)
+	while(!f1.eof())
 	{
-		cout<<"found"<<endl;
-		cout<<p->shop_main.product_num<<endl;
-		string add_pro;
-		while(!f1.eof())
+		string add_s;
+		shop *p;
+		int i=0;
+		product *pro;
+		f1>>add_s;
+		f1>>n;
+		p=locate_shop(All_s,add_s);
+		if(p)
 		{
-		f1>>add_pro;
-		cout<<add_pro<<endl;
-		pro=locate_product(p,add_pro);
-		if(!pro)
-		{
-			cout<<"null"<<add_pro<<endl;
-			cout<<add_pro<<endl;
-			if(!All_s.product_match.count(add_pro))
+			cout<<"found"<<endl;
+			cout<<p->shop_main.product_num<<endl;
+			string add_pro;
+			while(!f1.eof()&&i<n)
 			{
-				All_s.product_match[add_pro]=All_s.product_num++;
+				f1>>add_pro;
+				cout<<add_pro<<endl;
+				pro=locate_product(p,add_pro);
+				if(!pro)
+				{
+					cout<<"null"<<add_pro<<endl;
+					cout<<add_pro<<endl;
+					if(!All_s.product_match.count(add_pro))
+					{
+						All_s.product_match[add_pro]=All_s.product_num++;
+					}
+					pro=new product;
+					pro->product_name=add_pro;
+					cout<<"cai hua : "<<pro->product_name<<endl;
+					f1>>pro->price>>pro->sale_num;
+					cout<<"price: "<<pro->price<<"vsale: "<<pro->sale_num<<endl;
+					pro->belong_shop=&p->shop_main;
+					pro->shop_next_product=p->first_product->shop_next_product;
+					p->first_product->shop_next_product=pro;
+					p->shop_main.product_num++;
+					insert_product(All_s.all_pro,pro,All_s.product_match[add_pro]);
+				}
+				else
+				{
+					cout<<"popop"<<add_pro<<endl;
+					f1>>pro->price>>pro->sale_num;
+					pro->product_name=add_pro;
+					cout<<pro->price<<" "<<pro->sale_num<<endl;		
+					adjust_product(pro);
+				}
+				i++;
 			}
-			pro=new product;
-			pro->product_name=add_pro;
-			f1>>pro->price>>pro->sale_num;
-			pro->belong_shop=&p->shop_main;
-			pro->shop_next_product=p->first_product;
-			p->first_product=pro;
-			p->shop_main.product_num++;
-			insert_product(All_s.all_pro,pro,All_s.product_match[add_pro]);
-		}
-		else
-		{
-			cout<<"popop"<<add_pro<<endl;
-			f1>>pro->price>>pro->sale_num;
-			pro->product_name=add_pro;
-			cout<<pro->price<<" "<<pro->sale_num<<endl;
-		
-			adjust_product(pro);
-		}
 		}
 	}
+	
 	f1.close();
 }
 void add_shop(all_shop &All_s)
@@ -571,44 +581,78 @@ int main()
 	shop root;
 	all_shop All_s;
 	fstream f1;
-	f1.open("shop.txt",ios::in);
-	string a;
-	while(!f1.eof())
-	{
-		f1>>a;
-		cout<<a<<endl;
-	}
-	f1.close();
+
 	product all_pro[100];
+	cout<<"read shop info..."<<endl;
+	system("pause");
 	read_shop(All_s);
 
+	cout<<"add shop info..."<<endl;	
+	system("pause");
 	add_shop(All_s);
 	display_shops(All_s);	
-	write_shop(All_s.root);
 
+	cout<<"put added info into file..."<<endl;	
+	system("pause");
+	write_shop(All_s.root,"added_shop.txt");
+
+	cout<<"add product"<<endl;
 	add_product(All_s);
 
-	display_product(All_s);
+	cout<<"put added product info into file.."<<endl;	
+	system("pause");
+	write_shop(All_s.root,"added_product.txt");
 	
+	cout<<"product info"<<endl;	
+	system("pause");
+	display_product(All_s);
+
+	cout<<"shop info"<<endl;	
+	system("pause");
 	display_shops(All_s);	
+
+	cout<<"buy product.."<<endl;	
+	system("pause");
 	buy_product(All_s);
-	
+	cout<<"update file"<<endl;
+	write_shop(All_s.root,"bought_product.txt");
+	cout<<"product info.."<<endl;	
+	system("pause");
 	display_product(All_s);
 	
-//	display_shops(All_s);
-
+	display_shops(All_s);
+	cout<<"delete shop.."<<endl;	
+	system("pause");
 	delete_shops(All_s);
-	cout<<endl<<"delete"<<endl;
+	cout<<"update file"<<endl;
+	write_shop(All_s.root,"deleteded_shop.txt");
+	cout<<"after delete "<<endl;
+
+	cout<<"product info"<<endl;	
+	system("pause");
 	display_product(All_s);
+
+	cout<<"shop info"<<endl;	
+	system("pause");
 	display_shops(All_s);
 
-	cout<<endl<<"deletd product"<<endl;
+	cout<<endl<<"deletd product"<<endl;	
+	system("pause");
 	delete_products(All_s);
-	display_shops(All_s);
+	cout<<"update file"<<endl;
+	write_shop(All_s.root,"deleted_product.txt");
+	cout<<"product info"<<endl;	
+	system("pause");
 	display_product(All_s);
 
+	cout<<"shop info"<<endl;	
+	system("pause");
+	display_shops(All_s);
+
+	cout<<"search product .."<<endl;	
+	system("pause");
 	search_product(All_s);
-		write_shop(All_s.root);
+	write_shop(All_s.root,"shop2.txt");
 
 	return 0;
 }

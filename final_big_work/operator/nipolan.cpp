@@ -156,7 +156,7 @@ int main()
 			exp++;
 		}
 	}
-	cout<<p.top()<<endl;
+	cout<<endl<<p.top()<<endl;
 
 	return 0;
 

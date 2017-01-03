@@ -1,3 +1,20 @@
+/*
+9 11
+0 1 2 3 4 5 6 7 8
+0 1 6
+0 2 4
+0 3 5
+1 4 1
+2 4 1
+3 5 2
+4 6 9
+4 7 7
+5 7 4
+7 8 4
+6 8 2
+*/
+//graph_w.txt
+
 #include<iostream>
 #include<stack>
 #include<math.h>
@@ -50,7 +67,7 @@ void display_tree(ALGraph G)
 		cout<<G.vexs[i].vex<<": "<<endl;
 		while(p)
 		{
-			cout<<G.vexs[p->adjvex].vex<<" "<<p->weight<<endl;
+			cout<<G.vexs[p->adjvex].vex<<" weight: "<<p->weight<<endl;
 			p=p->nextedge;
 		}
 		i++;
@@ -61,7 +78,7 @@ void display_tree(ALGraph G)
 void CreateDG_ALG(ALGraph &G,int n,int e)
 {
 	fstream f1;
-	f1.open("graph_w.txt",ios::in);
+	f1.open("main_road.txt",ios::in);
 	int i,j;
 	ElemType v1,v2;
 	int weight;
@@ -69,12 +86,9 @@ void CreateDG_ALG(ALGraph &G,int n,int e)
 	int k;
 	f1>>G.vexnum;
 	f1>>G.edgenum;
-//	cout<<G.vexnum<<" "<<G.edgenum<<endl;
-//	G.edgenum=e;
 	for(i=0;i<G.vexnum;i++)
 	{
 		f1>>G.vexs[i].vex;
-//		cout<<G.vexs[i].vex<<" ";
 	}
 	for(k=0;k<G.edgenum;++k)
 	{
@@ -133,12 +147,14 @@ int main()
 	int min;
 	int cur;
 	int v0=2;
+	int final;
 	CreateDG_ALG(G,1,1);
+	display_tree(G);
 	n=G.vexnum;
 	 int i=0;
+	 cout<<"indegree: "<<endl;
 	while(n--)
 	{
-	//	cout<<i<" "<<G.vexs[i].indegree<<endl;
 		cout<<i<<" "<<G.vexs[i].indegree<<endl;
 		i++;
 	}
@@ -148,15 +164,12 @@ int main()
 	string road[100];
 	queue<int> q;
 	n=G.vexnum;
-//	int i=0;
 	i=0;
 	while(n--)
 	{
 		if(G.vexs[i].indegree==0)
 		{
 			q.push(i);
-			cout<<i<<endl;			
-			cout<<i<<": "<<	G.vexs[i].indegree<<endl;
 		}
 		road[i]=i+'0';
 		i++;
@@ -170,37 +183,27 @@ int main()
 		int t;
 		int re=-1;
 		string a;
-		cout<<"p"<<i<<endl;
 		while(p)
 		{
 			if((state[cur]+p->weight)>state[p->adjvex])
 			{
 				a='0'+p->adjvex;
 				state[p->adjvex]=state[cur]+p->weight;
+				final=p->adjvex;
 				road[p->adjvex]=road[cur]+a;
-				cout<<"road:"<<road[p->adjvex]<<endl;
 			}
 			G.vexs[p->adjvex].indegree--;
-			cout<<p->adjvex<<": "<<	G.vexs[p->adjvex].indegree<<endl;
 			if(G.vexs[p->adjvex].indegree==0)
 			{
 				q.push(p->adjvex);
 			}
 			p=p->nextedge;
 		}
-	//		cur=q.front();
-//	q.pop();
 	}
 
 	n=G.vexnum;
-//	int i=0;
 	i=0;
-	while(n--)
-	{
-	
-		cout<<road[i]<<endl;
-		i++;
-	}
+	cout<<"main road: "<<road[n-1]<<"¡¡weight: "<<state[final]<<endl;
 
 
 	return 0;
