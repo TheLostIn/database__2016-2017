@@ -1,5 +1,4 @@
 #include<iostream>
-#pragma warning(disable:4786)
 using namespace std;
 #include<fstream>
 #include<stack>
@@ -10,6 +9,9 @@ using namespace std;
 #include<map>
 #include<queue>
 #include<vector>
+#define FILE_TO_ENCODE "file_to_encode/"
+#define FILE_TO_DECODE "file_to_decode/"
+#define HUFF_TREE_DAT "huff_tree_dat/"
 struct huff
 {
 	int data;
@@ -231,6 +233,7 @@ void write_tree(map<char,string>en_code,huff * huff_man)
 	f2.open("huff_man_tree.dat",ios::out|ios::binary);
 	cout<<"write:"<<endl;
 	cout<<sizeof(huff_man)<<" "<<sizeof(huff)*N<<" "<<endl;
+	f2.write((char*)&N,sizeof(int));
 	for(int i=0;i<N;i++)
 		f2.write((char *)&huff_man[i],sizeof(huff));
 	display(huff_man);
@@ -245,10 +248,13 @@ void write_tree(map<char,string>en_code,huff * huff_man)
 huff* read_tree()
 {
 	huff *tree;
-	tree=new huff[N];
 	int a;
 	fstream f1;
 	f1.open("huff_man_tree.dat",ios::binary|ios::in);
+	f1.read((char *)&N,sizeof(int));
+	cout<<N<<endl;
+	system("pause");
+	tree=new huff[N];
 	f1.read((char *)tree,sizeof(huff)*N);
 	f1.close();
 	cout<<"tree:"<<endl;
@@ -319,7 +325,6 @@ void de_huff()
 }
 int main()
 {
-	cout<<"p"<<endl;
 	int i=1;
 	map<char,int> cnt;
 	map<char,string> en_code;
@@ -331,16 +336,18 @@ int main()
 	make_tree(huff_man);	
 	display(huff_man);
 	encode = make_code(huff_man);
+	/*
 	for(map<char,int>::reverse_iterator rit=cnt.rbegin();rit!=cnt.rend();rit++)
 	{
 		cout<<(*rit).first<<","<<(*rit).second<<endl;
 		en_code[(*rit).first]=encode[i++];
 	}
+	*/
 	write_tree(en_code,huff_man);
 
 	turn_txt_to_huff();
 	
-	de_huff();
+	//de_huff();
 
 	return 0;
 }

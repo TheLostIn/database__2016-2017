@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>maze</title>
+	<meta name="description" content="maze">
+	<meta name="keywords" content="maze">
+	<link href="css/maze.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/normalize.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/github-light.css" media="screen">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+ 	<link href="../public/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../public/bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../public_js/node_modules/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<div class="body-bg-img">
+	
+</div>
+<div class="container">
+
+	<div class="bs-example bs-example-form" style="padding: 20px;">
+		<div class="col-lg-12">
+      		<h3>迷宫</h3>
+      	</div>
+      	<div class="col-lg-12">
+      		<h3>
+      			啊哈 迷宫
+      		</h3>
+      	</div>    
+     <div id="ask_height_width">
+		<div class="col-lg-8 col-md-8 col-xs-8"><input type="number" class="col-lg-8 col-md-8 col-xs-8" name="width" id="width" min=1 max=41 placeholder="width (奇数)"></div>
+		<div class="col-lg-8 col-md-8 col-xs-8"><input type="number" min=1 max=41 class="col-lg-8 col-md-8 col-xs-8" name="height" id="height" placeholder="height (奇数)"></div>
+		<!-- <div class="col-lg-8 col-md-8 col-xs-8"><input type="text" class="col-lg-8 col-md-8 col-xs-8" name="hard" id="hard" placeholder="hard 1 2 3 4 5 6 越小越难"></div> -->
+     </div>
+		<div class="col-lg-8 col-md-8 col-xs-8"><input type="button" name="submit" value="let's begin" class="begin col-lg-8 col-md-8 col-xs-8" onclick="make()"></div>
+		
+	</div> 
+	<div id="bg" style="padding: 30px" class="col-lg-12 col-xs-12 col-md-12">
+		
+	 </div>
+	 <div id="re_start" style="padding: 30px" class="col-lg-8 col-xs-8 col-md-8">
+	 <input type="button" name="submit" id="re_start" value="re_start" class="begin col-lg-8 col-md-8 col-xs-8" onclick="re_start()">
+	 </div>
+	 <div style="padding: 30px" class="col-lg-8 col-xs-8 col-md-8">
+	 	<input type="button" name="submit" id="help" value="help me" class="begin col-lg-8 col-md-8 col-xs-8" onclick="help()">
+	 </div>
+</div>
+</body>
+<script type="text/javascript">
+$('#record').hide();
+$('#re_start').hide();
+$('#help').hide();
+//start();
+</script>
+<script type="text/javascript">
+</script>
+
+	<script type="text/javascript" src="js/maze2.js"></script>
+</html>

@@ -1,17 +1,85 @@
 .flag
 {
-	background-color: rgba(0, 255, 240, 0.51);
+	 background-color: rgba(38, 14, 236, 0.09);
 }
 .bomb_flag
 {
-	background-color: rgba(253, 244, 30, 0.62);
+	background-color: rgba(76, 175, 80, 0.82);
 }
-input
+.default
+{
+    background-color: rgb(232, 253, 251);
+}
+#bg input[type='button']
 {
 	width:30px;
 	height: 30px;
 	padding: 0;
-    margin: 0;
+    margin: 3px;
     /*border-style: none;*/
+        border-width: thin;
+    border-radius: 18%;
+        border-right-color: white;
+    border-bottom-color: white;
 
+}
+input[type=text],input[type=number]
+{
+	/*width: 30px;
+	height: 20px;*/
+	margin: 10px;
+    height: 28px;
+    border-radius: 7px;
+    border-style: none;
+    text-align: center;
+}
+body
+{/*
+	background-image: url(../../public/bg_img/bunny.jpg);*/
+/*	background-size: cover;
+	background-repeat: no-repeat;
+	font-family: 微软雅黑;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	top:0;
+	left: 0;
+	height: 100%;
+	position: fixed;
+*/
+filter : progid:DXImageTransform.Microsoft.AlphaImageLoader ( sizingMethod='scale' , src='../../public/bg_img/bunny.jpg') 
+
+
+}
+.begin
+{
+	border-radius: 5px;
+    height: 26px;
+    background-color: rgba(184, 236, 36, 0.53);
+    margin: 10px;
+}
+h3
+{
+	margin: 12px;
+	font-family: 微软雅黑;
+	text-align: left;
+}
+.body-bg-img
+{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: url(../../public/bg_img/bunny.jpg);
+	background-size: cover;
+}
+.container
+{
+	font-family: 微软雅黑;
+}
+#record
+{
+	padding-left: 30px;
+	text-align: left;
 }
