@@ -1,9 +1,10 @@
 #include<iostream>
 #include<string>
+#include<fstream>
 using namespace std;
 #include<stack>
 #include<map>
-char a[100]="#12+90*(90+99)-29+12/2#";
+#define EXPRESSION_FILE "exp.txt"
 char int_divide='_';
 int count(int left,int right,char op)
 {
@@ -39,16 +40,17 @@ int priority(char a)
 			return -1;
 	}
 }
-void nipolan(char *post)
+int nipolan(char *a,char *&post)
 {
 	stack<char>p;
 	int i=0,j=0;
 	int flag=0;
-	memset(post,' ',sizeof(post));
+//	memset(post,' ',sizeof(post));
 	i++;
+	cout<<"origin expression: "<<a<<endl;
 	while(a[i]!='#')
 	{
-		cout<<a[i]<<endl;
+		
 		if(a[i]=='(')
 		{
 			p.push(a[i]);
@@ -74,16 +76,31 @@ void nipolan(char *post)
 			flag=0;
 			if(a[i]==')')
 			{
-				while(p.top()!='(')
+				while(!p.empty()&&p.top()!='(')
 				{
 					post[j]=p.top();
 					j++;
 					p.pop();
 				}
-				if(p.top()=='(')
+			
+				if(p.empty())
 				{
-					p.pop();
+					return 0;
 				}
+				else
+				{
+					
+					if(p.top()=='#')
+					{
+						cout<<"wrong expresion"<<endl;
+						return 0;
+					}
+					if(p.top()=='(')
+					{
+						p.pop();
+					}
+				}
+				
 			}
 			else if(p.empty()||priority(a[i])>priority(p.top()))
 			{
@@ -115,49 +132,78 @@ void nipolan(char *post)
 		p.pop();
 	}
 	post[j]='#';
-	cout<<a<<endl;
-	cout<<post<<endl;
+	post[++j]='\0';
+	cout<<"post: "<<post<<endl;
+	return 1;
 }
 
-int main()
+int count_expression(char post[],char *a)
 {
-	char post[100];
 	char *exp;
 	memset(post,' ',sizeof(post));
-	nipolan(post);
-	exp=&post[0];
-	stack<int>p;
-	stack<char>op;
-//	cout<<post[2];
-	while(*exp!='#')
+	if(nipolan(a,post))
 	{
-		cout<<*exp;
-		if(*exp>='0'&&*exp<='9')
-		{	
-			int tmp=0;
-			while(*(exp)!=int_divide)
+		exp=post;
+		stack<int>p;
+		stack<char>op;
+		while(*exp!='#')
+		{
+			if(*exp=='(')
+			{
+				return 0;
+			}
+			if(*exp>='0'&&*exp<='9')
 			{	
-				tmp=tmp*10+(*exp-'0');
+				int tmp=0;
+				while(*(exp)!=int_divide)
+				{	
+					tmp=tmp*10+(*exp-'0');
+					exp++;
+				}
+				p.push(tmp);
 				exp++;
 			}
-			p.push(tmp);
-			exp++;
+			else if(*exp!='#')
+			{
+				int left,right;
+				char chr;
+				right=p.top();
+				p.pop();
+				left=p.top();
+				p.pop();
+				p.push(count(left,right,*exp));
+				exp++;
+			}
 		}
-		else if(*exp!='#')
+		cout<<endl<<p.top()<<endl<<endl;
+	}
+	else
+	{
+		return 0;
+	}
+	return 1;
+}
+int main()
+{
+	fstream exp_file;
+	int i=1;
+	exp_file.open(EXPRESSION_FILE,ios::in);
+	if(exp_file.fail())
+	{
+		cout<<"can't open file"<<endl;
+		exit(1);
+	}
+	while(!exp_file.eof())
+	{
+		char post[30];
+		char exp[30];
+		exp_file>>exp;
+		cout<<i++<<" :¡¡"<<endl;
+		if(!(count_expression(post,exp)))
 		{
-			int left,right;
-			char chr;
-			right=p.top();
-			p.pop();
-			left=p.top();
-			p.pop();
-			p.push(count(left,right,*exp));
-//			cout<<endl<<"left: "<<left<<" right "<<right<<" "<<count(left,right,*exp)<<endl;
-			exp++;
+			cout<<"wrong expression. :"<<exp<<endl<<endl;
 		}
 	}
-	cout<<endl<<p.top()<<endl;
-
+	exp_file.close();
 	return 0;
-
 }

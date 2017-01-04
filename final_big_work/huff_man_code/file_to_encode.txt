@@ -1,2 +1,1 @@
-huff_origin.txt 1_encoded.txt huff_1.dat
-huff_origin1.txt 2_encoded.txt huff_2.dat
+huff_origin.txt 1_encoded.dat huff_1.dat
