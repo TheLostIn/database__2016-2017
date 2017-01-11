@@ -14,8 +14,10 @@ var direction;
 var visit;
 var all_blank;
 var food_num;
-var food=[-1,-1,-1,-1];
-var all_food_num=4;
+var all_food_num=10;
+var food=new Array(all_food_num);
+food.fill(-1);
+
 var show;
 var key=new Array();
 
@@ -166,6 +168,7 @@ function key_event()
 					if(flag!=-1)
 					{
 						food.splice(flag,1,-1);
+						console.log("all_blank: ",all_blank);
 						snake_body.push(point_to_count(new_x,new_y));
 						snake_head={x:new_x,y:new_y};
 						show_place(point_to_count(snake_head.x,snake_head.y),"get_food");
@@ -321,7 +324,8 @@ function re_start()
 	visit=new Array();
 	all_blank=0;
 	food_num=0;
-	food=[-1,-1,-1,-1];
+	food=new Array(all_food_num);
+	food.fill(-1);
 	flag=0;
 	on_going=0;
 	$('#bg').empty();

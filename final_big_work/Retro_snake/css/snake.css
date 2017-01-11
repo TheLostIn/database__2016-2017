@@ -16,6 +16,7 @@
     -webkit-transition: background-color 0.5s, -webkit-transform 0.5s; /* For Safari 3.1 to 6.0 */
     transition: background-color 0.5s, transform 0.5s;
 }
+
 #bg input[type='button']
 {
 	width:20px;

@@ -1,3 +1,4 @@
+
 #include<iostream>
 #include<queue>
 #include<stack>
@@ -154,7 +155,7 @@ int main()
 	while(!f_test.eof())
 	{
 		f_test>>test_file_name;
-		cout<<"test_file "<<i<<": "<<test_file_name<<endl<<endl;
+		cout<<"test_file "<<i++<<": "<<test_file_name<<endl<<endl;
 		all_country C;
 		if(read_table(test_file_name,C))
 		{

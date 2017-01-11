@@ -37,6 +37,10 @@ input[type=text],input[type=number]
     border-style: none;
     text-align: center;
 }
+#bg
+{
+	line-height: 0;
+}
 body
 {/*
 	background-image: url(../../public/bg_img/bunny.jpg);*/
